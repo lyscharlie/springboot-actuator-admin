@@ -23,10 +23,13 @@ public class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
 		successHandler.setTargetUrlParameter("redirectTo");
 		successHandler.setDefaultTargetUrl(adminContextPath + "/");
 
-		http.authorizeRequests().antMatchers(adminContextPath + "/assets/**").permitAll()
-				.antMatchers(adminContextPath + "/login").permitAll().anyRequest().authenticated().and().formLogin()
-				.loginPage(adminContextPath + "/login").successHandler(successHandler).and().logout()
-				.logoutUrl(adminContextPath + "/logout").and().httpBasic().and().csrf()
+		http.authorizeRequests()
+				.antMatchers(adminContextPath + "/assets/**").permitAll() // 静态文件允许访问
+				.antMatchers(adminContextPath + "/login").permitAll() //登录页面允许访问
+				.anyRequest().authenticated()//其他所有请求需要登录
+				.and().formLogin().loginPage(adminContextPath + "/login").successHandler(successHandler)//登录页面配置，用于替换security默认页面
+				.and().logout().logoutUrl(adminContextPath + "/logout") //登出页面配置，用于替换security默认页面
+				.and().httpBasic().and().csrf()
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 				.ignoringAntMatchers(adminContextPath + "/instances", adminContextPath + "/actuator/**");
 	}
