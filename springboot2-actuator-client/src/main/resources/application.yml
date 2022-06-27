@@ -42,7 +42,7 @@ spring:
   security:
     user:
       name: admin
-      password: admin
+      password: admin123456
       # 拥有角色，用于允许自身访问
       roles: actuator_admin
   boot:
