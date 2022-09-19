@@ -2,6 +2,7 @@ server:
   port: 7070
   servlet:
     context-path: /server
+  forward-headers-strategy: native # 解决nginx代理导致的异常
 
 spring:
   jackson:
